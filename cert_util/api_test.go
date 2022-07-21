@@ -1,12 +1,12 @@
 package cert_util
 
 import (
+	"github.com/stretchr/testify/assert"
+	"github.com/vadv/gopher-lua-libs/tests"
 	"log"
 	"net/http"
 	"testing"
 	"time"
-
-	lua "github.com/yuin/gopher-lua"
 )
 
 func runHttps(addr string) {
@@ -26,9 +26,5 @@ func TestApi(t *testing.T) {
 	go runHttps(":1443")
 	time.Sleep(time.Second)
 
-	state := lua.NewState()
-	Preload(state)
-	if err := state.DoFile("./test/test_api.lua"); err != nil {
-		t.Fatalf("execute test: %s\n", err.Error())
-	}
+	assert.NotZero(t, tests.RunLuaTestFile(t, Preload, "./test/test_api.lua"))
 }

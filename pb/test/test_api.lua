@@ -14,16 +14,18 @@ local function run(bar)
   bar:finish()
 end
 
--- Predefined template
-local bar = pb.new(count)
-bar:configure({template='simple'})
+function Test_simple(t)
+  -- Predefined template
+  local bar = pb.new(count)
+  bar:configure({template='simple'})
 
-run(bar)
+  run(bar)
+end
 
+function Test_custom(t)
+  local tmpl = string.format('%s {{ counters . }} {{bar . }} {{percent . }} {{ etime . }}', 'THIS IS PREFIX')
 
--- Custom template
-local tmpl = string.format('%s {{ counters . }} {{bar . }} {{percent . }} {{ etime . }}', 'THIS IS PREFIX')
-
-local bar = pb.new(count)
-bar:configure({template=tmpl})
-run(bar)
+  local bar = pb.new(count)
+  bar:configure({template=tmpl})
+  run(bar)
+end

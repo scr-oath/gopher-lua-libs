@@ -45,10 +45,36 @@ func tRun(L *lua.LState) int {
 	return 0
 }
 
+func tLog(L *lua.LState) int {
+	t := checkT(L, 1)
+	var args []interface{}
+	top := L.GetTop()
+	for i := 2; i <= top; i++ {
+		args = append(args, L.Get(i))
+	}
+	t.Log(args...)
+	return 0
+}
+
+func tLogf(L *lua.LState) int {
+	t := checkT(L, 1)
+	format := L.CheckString(2)
+
+	var args []interface{}
+	top := L.GetTop()
+	for i := 3; i <= top; i++ {
+		args = append(args, L.Get(i))
+	}
+	t.Logf(format, args...)
+	return 0
+}
+
 func registerTType(L *lua.LState) {
 	mt := L.NewTypeMetatable(TType)
 	index := L.SetFuncs(L.NewTable(), map[string]lua.LGFunction{
-		"Run": tRun,
+		"Run":  tRun,
+		"Log":  tLog,
+		"Logf": tLogf,
 	})
 	L.SetField(mt, "__index", index)
 	L.SetGlobal(TType, mt)
