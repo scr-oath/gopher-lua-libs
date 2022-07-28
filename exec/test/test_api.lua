@@ -6,7 +6,7 @@ function assert_equal(expected, got)
     assert(got == expected, string.format([[expected "%s"; got "%s"]], expected, got))
 end
 
-function TestCommand(t)
+function TestCommand_tostring(t)
     command = exec.command('mypath', "abc", "def")
     t:Log(inspect(command))
     assert_equal("mypath abc def", tostring(command))
@@ -30,4 +30,16 @@ function TestRun_printf(t)
     local err = command:run()
     assert(not err, err)
     assert_equal("foo\nbar baz\n", sb:string())
+end
+
+function TestRun_start_wait(t)
+    command = exec.command("echo", "foo bar baz")
+    local sb = strings.new_builder()
+    command.stdout = sb
+    t:Log(inspect(command))
+    local err = command:start()
+    assert(not err, err)
+    err = command:wait()
+    assert(not err, err)
+    assert_equal("foo bar baz\n", sb:string())
 end
