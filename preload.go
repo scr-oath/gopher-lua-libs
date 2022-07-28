@@ -9,6 +9,7 @@ import (
 	cmd "github.com/vadv/gopher-lua-libs/cmd"
 	crypto "github.com/vadv/gopher-lua-libs/crypto"
 	db "github.com/vadv/gopher-lua-libs/db"
+	"github.com/vadv/gopher-lua-libs/exec"
 	filepath "github.com/vadv/gopher-lua-libs/filepath"
 	goos "github.com/vadv/gopher-lua-libs/goos"
 	http "github.com/vadv/gopher-lua-libs/http"
@@ -54,6 +55,7 @@ func Preload(L *lua.LState) {
 	yaml.Preload(L)
 	plugin.Preload(L)
 	cmd.Preload(L)
+	exec.Preload(L)
 	json.Preload(L)
 	tcp.Preload(L)
 	xmlpath.Preload(L)

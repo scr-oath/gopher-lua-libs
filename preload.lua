@@ -8,6 +8,7 @@ function TestRequireModule(t)
         "cmd",
         "crypto",
         "db",
+        "exec",
         "filepath",
         "goos",
         "humanize",
